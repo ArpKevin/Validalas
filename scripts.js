@@ -22,8 +22,6 @@ $(function() {
         // ÁSZF
         let isChecked = $checkbox.prop("checked");
 
-        console.log(isChecked)
-
         if (!isChecked){
             invalidFields.push("ÁSZF");
             $checkbox.removeClass(validClass).addClass(invalidClass);
@@ -36,42 +34,42 @@ $(function() {
         let username = $username.val();
         if (username == 0){
             invalidFields.push("Felhasználónév");
-            $checkbox.removeClass(validClass).addClass(invalidClass);
+            $username.removeClass(validClass).addClass(invalidClass);
         } else {
-            $checkbox.addClass(validClass).removeClass(invalidClass);
+            $username.addClass(validClass).removeClass(invalidClass);
         }
 
         // Jelszó
 
         let password = $password.val();
-        if (password.Length <= 6){
+        if (password.length <= 6){
             invalidFields.push("Jelszó");
-            $checkbox.removeClass(validClass).addClass(invalidClass);
+            $password.removeClass(validClass).addClass(invalidClass);
         } else {
-            $checkbox.addClass(validClass).removeClass(invalidClass);
+            $password.addClass(validClass).removeClass(invalidClass);
         }
 
         // Jelszó megint
 
         let passwordAgain = $passwordAgain.val();
-        if (passwordAgain != password ){
-            invalidFields.push("Jelszó újra");
-            $checkbox.removeClass(validClass).addClass(invalidClass);
+        if (passwordAgain != password || passwordAgain.length <= 6){
+            invalidFields.push("Jelszó megerősítés");
+            $passwordAgain.removeClass(validClass).addClass(invalidClass);
         } else {
-            $checkbox.addClass(validClass).removeClass(invalidClass);
+            $passwordAgain.addClass(validClass).removeClass(invalidClass);
         }
 
         // Validálás
 
-        if (invalidFields.Length == 0){
+        if (invalidFields.length == 0){
             $alert.hide();
             $form.hide();
             $successText.show();
         } else {
             $alert.show();
-            $alertFieldList = "";
+            $alertFieldList.html("");
             $(invalidFields).each(function(i) {
-                $alertFieldList += `<li>Helytelen a ${i}</li>`;
+                $alertFieldList.append(`<li>Helytelen a(z) ${invalidFields[i]}</li>`);
               });
         }
 
